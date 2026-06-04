@@ -21,6 +21,19 @@ const sizeClasses: Record<ButtonSize, string> = {
   lg: 'h-12 px-7 text-base gap-2 rounded-xl',
 };
 
+export function buttonClasses(
+  variant: ButtonVariant = 'primary',
+  size: ButtonSize = 'md',
+  fullWidth = false,
+): string {
+  return cn(
+    'press inline-flex items-center justify-center font-medium whitespace-nowrap select-none disabled:cursor-not-allowed',
+    variantClasses[variant],
+    sizeClasses[size],
+    fullWidth && 'w-full',
+  );
+}
+
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant;
   size?: ButtonSize;
@@ -51,14 +64,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
       ref={ref}
       type={type}
       disabled={disabled || isLoading}
-      className={cn(
-        'press inline-flex items-center justify-center font-medium whitespace-nowrap select-none',
-        'disabled:cursor-not-allowed',
-        variantClasses[variant],
-        sizeClasses[size],
-        fullWidth && 'w-full',
-        className,
-      )}
+      className={cn(buttonClasses(variant, size, fullWidth), className)}
       {...props}
     >
       {isLoading ? <Spinner /> : leftIcon}
