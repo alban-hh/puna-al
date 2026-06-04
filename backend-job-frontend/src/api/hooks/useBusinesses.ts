@@ -7,10 +7,11 @@ import {
 } from '@/api';
 import { queryKeys } from '@/api/queryKeys';
 
-export function useMyBusinesses() {
+export function useMyBusinesses(enabled = true) {
   return useQuery({
     queryKey: queryKeys.businesses.mine,
     queryFn: businessesApi.mine,
+    enabled,
   });
 }
 

@@ -13,7 +13,7 @@ import { ApplyDialog } from '@/features/applications/ApplyDialog';
 export function JobApplyPanel({ job }: { job: JobDetail }) {
   const { isAuthenticated } = useAuth();
   const location = useLocation();
-  const myBusinesses = useMyBusinesses();
+  const myBusinesses = useMyBusinesses(isAuthenticated);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [applied, setApplied] = useState(false);
 
