@@ -1,7 +1,8 @@
 import { forwardRef, useId, type ReactNode, type SelectHTMLAttributes } from 'react';
 import { ChevronDown } from 'lucide-react';
 import { cn } from '@/lib/cn';
-import { FieldShell, controlBase, controlBorder } from './Field';
+import { FieldShell } from './Field';
+import { controlBase, controlBorder } from './fieldStyles';
 
 export interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
   label?: ReactNode;

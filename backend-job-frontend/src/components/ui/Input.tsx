@@ -1,6 +1,7 @@
 import { forwardRef, useId, type InputHTMLAttributes, type ReactNode } from 'react';
 import { cn } from '@/lib/cn';
-import { FieldShell, controlBase, controlBorder } from './Field';
+import { FieldShell } from './Field';
+import { controlBase, controlBorder } from './fieldStyles';
 
 export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: ReactNode;

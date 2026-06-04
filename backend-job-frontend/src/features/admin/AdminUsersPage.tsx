@@ -15,7 +15,7 @@ import { Pagination } from '@/components/ui/Pagination';
 import { ConfirmDialog } from '@/components/ui/ConfirmDialog';
 import { QueryBoundary } from '@/components/feedback/QueryBoundary';
 import { EmptyState } from '@/components/feedback/EmptyState';
-import { controlBase, controlBorder } from '@/components/ui/Field';
+import { controlBase, controlBorder } from '@/components/ui/fieldStyles';
 
 const userStatusLabels: Record<UserStatus, string> = {
   active: 'Aktiv',

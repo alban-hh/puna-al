@@ -1,6 +1,7 @@
 import { forwardRef, useId, type ReactNode, type TextareaHTMLAttributes } from 'react';
 import { cn } from '@/lib/cn';
-import { FieldShell, controlBase, controlBorder } from './Field';
+import { FieldShell } from './Field';
+import { controlBase, controlBorder } from './fieldStyles';
 
 export interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   label?: ReactNode;

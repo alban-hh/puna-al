@@ -6,7 +6,7 @@ import { Select } from '@/components/ui/Select';
 import { Checkbox } from '@/components/ui/Checkbox';
 import { Card, CardBody } from '@/components/ui/Card';
 import { CategorySelect, EmploymentTypeSelect, QarkSelect } from '@/components/forms/MetaSelects';
-import { controlBase, controlBorder } from '@/components/ui/Field';
+import { controlBase, controlBorder } from '@/components/ui/fieldStyles';
 import { cn } from '@/lib/cn';
 import { type useJobSearch } from './useJobSearch';
 
