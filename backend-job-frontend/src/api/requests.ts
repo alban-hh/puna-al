@@ -91,12 +91,12 @@ export interface RejectBusinessRequest {
   reason: string;
 }
 
-export interface PaginationParams {
+export type PaginationParams = {
   page?: number;
   per_page?: number;
-}
+};
 
-export interface JobListParams extends PaginationParams {
+export type JobListParams = PaginationParams & {
   q?: string;
   category?: string;
   qark?: Qark;
@@ -105,18 +105,18 @@ export interface JobListParams extends PaginationParams {
   remote?: boolean;
   featured?: boolean;
   sort?: JobSort;
-}
+};
 
-export interface AdminBusinessListParams extends PaginationParams {
+export type AdminBusinessListParams = PaginationParams & {
   status?: BusinessStatus;
-}
+};
 
-export interface AdminUserListParams extends PaginationParams {
+export type AdminUserListParams = PaginationParams & {
   status?: UserStatus;
   q?: string;
-}
+};
 
-export interface AdminJobListParams extends PaginationParams {
+export type AdminJobListParams = PaginationParams & {
   status?: JobStatus;
   business_id?: string;
-}
+};
