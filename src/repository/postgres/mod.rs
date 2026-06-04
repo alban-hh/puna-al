@@ -26,7 +26,8 @@ pub use user_repo::PgUserRepository;
 pub async fn connect_pool(database_url: &str, max_connections: u32) -> AppResult<PgPool> {
     let sanitized = strip_unsupported_params(database_url);
     let options = PgConnectOptions::from_str(&sanitized)
-        .map_err(|e| AppError::Internal(anyhow!("invalid DATABASE_URL: {e}")))?;
+        .map_err(|e| AppError::Internal(anyhow!("invalid DATABASE_URL: {e}")))?
+        .statement_cache_capacity(0);
 
     PgPoolOptions::new()
         .max_connections(max_connections)
