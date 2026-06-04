@@ -345,6 +345,15 @@ The **Auth** column means:
 - Auth: None
 - `200` → array of `MetaItem` (value = code, label = Albanian name).
 
+#### `GET /verify-email?token=…`  (HTML page — not under `/api/v1`)
+- Auth: None
+- This is the page the **verification email link** points to. The backend verifies the token server-side and returns a small HTML confirmation page (Albanian). The frontend does **not** need to implement this — it's handled by the backend.
+- For programmatic verification (e.g. if you build your own page), use `POST /api/v1/auth/verify-email` with the token in the body instead.
+
+#### `GET /reset-password?token=…`  (HTML page — not under `/api/v1`)
+- Auth: None
+- This is the page the **password-reset email link** points to. The backend serves a small HTML form that collects the new password and submits it to `POST /api/v1/auth/reset-password` for you. The frontend does **not** need to implement this.
+
 ---
 
 ### 8.2 Auth & account
@@ -383,6 +392,7 @@ The **Auth** column means:
 - Body: `{ "token": string }` (the token from the verification email link `…/verify-email?token=…`)
 - `200` → `{ "message": "Email-i u verifikua me sukses." }`
 - Errors: `400 bad_request` (invalid or expired token).
+- Note: in the default setup the verification email link is handled by the backend page `GET /verify-email` (see §8.1), so you usually don't need to call this endpoint yourself. It exists for when you build your own verification page.
 
 #### `POST /api/v1/auth/resend-verification`
 - Auth: None
@@ -399,6 +409,7 @@ The **Auth** column means:
 - Body: `{ "token": string, "password": string }` (`password` 8–128 chars)
 - `200` → `{ "message": "Fjalëkalimi u rivendos me sukses." }`. Revokes all of the user's refresh tokens.
 - Errors: `400 validation_error`; `400 bad_request` (invalid/expired token).
+- Note: in the default setup the reset email link is handled by the backend page `GET /reset-password` (see §8.1), which submits to this endpoint for you.
 
 #### `GET /api/v1/me`
 - Auth: User
@@ -644,7 +655,7 @@ All require **Admin**. Non-admins get `403`.
 
 ### Sign up → verify → become an employer
 1. `POST /auth/register` → store `access_token` + `refresh_token`, show "check your email".
-2. User clicks the email link `…/verify-email?token=XYZ`. Your frontend reads `token` from the URL and calls `POST /auth/verify-email { token }`.
+2. User clicks the verification link in the email. It opens the backend page `GET /verify-email?token=…`, which verifies them and shows a confirmation page — no frontend work needed. (Password reset works the same way via `GET /reset-password?token=…`.)
 3. `POST /businesses { … }` → business is `pending`.
 4. Wait for admin approval (status becomes `approved`; the owner gets an email).
 5. `POST /jobs { business_id, … }` → draft, then `POST /jobs/{id}/publish`.
