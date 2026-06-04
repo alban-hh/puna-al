@@ -6,3 +6,4 @@ pub mod business;
 pub mod health;
 pub mod job;
 pub mod meta;
+pub mod page;
