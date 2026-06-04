@@ -1,9 +1,5 @@
 import type { ApplicationStatus, BusinessStatus, JobStatus } from '@/api';
-import {
-  applicationStatusLabels,
-  businessStatusLabels,
-  jobStatusLabels,
-} from '@/lib/labels';
+import { applicationStatusLabels, businessStatusLabels, jobStatusLabels } from '@/lib/labels';
 import { Badge, type BadgeTone } from './Badge';
 
 const businessTone: Record<BusinessStatus, BadgeTone> = {

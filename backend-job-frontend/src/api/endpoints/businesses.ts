@@ -1,9 +1,5 @@
 import { apiClient } from '../client';
-import type {
-  CreateBusinessRequest,
-  PaginationParams,
-  UpdateBusinessRequest,
-} from '../requests';
+import type { CreateBusinessRequest, PaginationParams, UpdateBusinessRequest } from '../requests';
 import type { Business, Job, Page } from '../types';
 
 export const businessesApi = {

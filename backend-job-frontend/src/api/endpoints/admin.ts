@@ -1,9 +1,5 @@
 import { apiClient } from '../client';
-import type {
-  AdminBusinessListParams,
-  AdminJobListParams,
-  AdminUserListParams,
-} from '../requests';
+import type { AdminBusinessListParams, AdminJobListParams, AdminUserListParams } from '../requests';
 import type { AdminStats, Business, Job, Page, User } from '../types';
 
 export const adminApi = {

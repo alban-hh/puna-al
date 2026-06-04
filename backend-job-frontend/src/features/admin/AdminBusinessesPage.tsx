@@ -77,7 +77,11 @@ export function AdminBusinessesPage() {
         }
         isEmpty={(data) => data.items.length === 0}
         emptyFallback={
-          <EmptyState icon={Building2} title="Asnjë biznes" description="Nuk ka biznese që përputhen me filtrin." />
+          <EmptyState
+            icon={Building2}
+            title="Asnjë biznes"
+            description="Nuk ka biznese që përputhen me filtrin."
+          />
         }
       >
         {(data) => (
@@ -162,7 +166,9 @@ export function AdminBusinessesPage() {
         onConfirm={confirmSuspend}
         onClose={() => setSuspendTarget(null)}
       >
-        <p className="text-sm text-ink-soft">Biznesi do të bëhet i padukshëm dhe punët e tij nuk do të shfaqen.</p>
+        <p className="text-sm text-ink-soft">
+          Biznesi do të bëhet i padukshëm dhe punët e tij nuk do të shfaqen.
+        </p>
       </ConfirmDialog>
     </div>
   );

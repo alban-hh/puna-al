@@ -82,9 +82,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
           >
             <span className="mt-0.5 shrink-0">{variantStyles[toast.variant].icon}</span>
             <div className="min-w-0 flex-1">
-              {toast.title && (
-                <p className="text-sm font-semibold text-ink">{toast.title}</p>
-              )}
+              {toast.title && <p className="text-sm font-semibold text-ink">{toast.title}</p>}
               <p className="text-sm leading-snug text-ink-soft">{toast.message}</p>
             </div>
             <button

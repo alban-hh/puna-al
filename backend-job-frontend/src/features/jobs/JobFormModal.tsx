@@ -70,9 +70,7 @@ export function JobFormModal({ open, onClose, businessId, job }: JobFormModalPro
       }
       reset();
       onClose();
-    } catch {
-      /* error surfaced inline */
-    }
+    } catch {}
   });
 
   return (
@@ -81,7 +79,9 @@ export function JobFormModal({ open, onClose, businessId, job }: JobFormModalPro
       onClose={close}
       className="max-w-2xl"
       title={isEdit ? 'Modifiko punën' : 'Posto një punë të re'}
-      description={isEdit ? job?.title : 'Plotësoni detajet. Puna ruhet si draft derisa ta publikoni.'}
+      description={
+        isEdit ? job?.title : 'Plotësoni detajet. Puna ruhet si draft derisa ta publikoni.'
+      }
       footer={
         <>
           <Button variant="ghost" onClick={close} disabled={mutation.isPending}>

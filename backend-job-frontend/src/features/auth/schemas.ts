@@ -25,17 +25,6 @@ export const forgotPasswordSchema = z.object({
 });
 export type ForgotPasswordValues = z.infer<typeof forgotPasswordSchema>;
 
-export const resetPasswordSchema = z
-  .object({
-    password: passwordSchema,
-    confirm: z.string(),
-  })
-  .refine((values) => values.password === values.confirm, {
-    message: 'Fjalëkalimet nuk përputhen.',
-    path: ['confirm'],
-  });
-export type ResetPasswordValues = z.infer<typeof resetPasswordSchema>;
-
 export const resendSchema = z.object({
   email: emailSchema,
 });

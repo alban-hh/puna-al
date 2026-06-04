@@ -25,22 +25,21 @@ export const QarkSelect = forwardRef<HTMLSelectElement, MetaSelectProps>(functio
   );
 });
 
-export const CategorySelect = forwardRef<HTMLSelectElement, MetaSelectProps>(function CategorySelect(
-  { placeholder, ...props },
-  ref,
-) {
-  const { data } = useCategories();
-  return (
-    <Select ref={ref} {...props}>
-      {placeholder && <option value="">{placeholder}</option>}
-      {(data ?? []).map((item) => (
-        <option key={item.value} value={item.value}>
-          {item.label}
-        </option>
-      ))}
-    </Select>
-  );
-});
+export const CategorySelect = forwardRef<HTMLSelectElement, MetaSelectProps>(
+  function CategorySelect({ placeholder, ...props }, ref) {
+    const { data } = useCategories();
+    return (
+      <Select ref={ref} {...props}>
+        {placeholder && <option value="">{placeholder}</option>}
+        {(data ?? []).map((item) => (
+          <option key={item.value} value={item.value}>
+            {item.label}
+          </option>
+        ))}
+      </Select>
+    );
+  },
+);
 
 export const EmploymentTypeSelect = forwardRef<HTMLSelectElement, MetaSelectProps>(
   function EmploymentTypeSelect({ placeholder, ...props }, ref) {

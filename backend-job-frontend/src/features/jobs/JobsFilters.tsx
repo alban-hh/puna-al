@@ -17,7 +17,8 @@ interface JobsFiltersProps {
 export function JobsFilters({ search }: JobsFiltersProps) {
   const { searchParams, setParam, clear, activeFilterCount } = search;
 
-  const [qInput, setQInput] = useState(searchParams.get('q') ?? '');
+  const urlQ = searchParams.get('q') ?? '';
+  const [qInput, setQInput] = useState(urlQ);
   const isFirstRun = useRef(true);
 
   useEffect(() => {
@@ -28,6 +29,10 @@ export function JobsFilters({ search }: JobsFiltersProps) {
     const handle = setTimeout(() => setParam('q', qInput.trim() || undefined), 350);
     return () => clearTimeout(handle);
   }, [qInput, setParam]);
+
+  useEffect(() => {
+    setQInput((prev) => (prev.trim() === urlQ ? prev : urlQ));
+  }, [urlQ]);
 
   const handleClear = () => {
     clear();

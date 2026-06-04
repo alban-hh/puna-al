@@ -23,7 +23,13 @@ export function ErrorState({ error, onRetry, title = 'Diçka shkoi keq' }: Error
       <h3 className="font-display text-lg text-ink">{title}</h3>
       <p className="mt-1 max-w-sm text-sm text-flame-800">{resolveErrorMessage(error)}</p>
       {onRetry && (
-        <Button variant="secondary" size="sm" className="mt-5" leftIcon={<RotateCw className="size-4" />} onClick={onRetry}>
+        <Button
+          variant="secondary"
+          size="sm"
+          className="mt-5"
+          leftIcon={<RotateCw className="size-4" />}
+          onClick={onRetry}
+        >
           Provo përsëri
         </Button>
       )}

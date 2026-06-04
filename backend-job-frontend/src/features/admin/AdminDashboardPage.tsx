@@ -64,7 +64,9 @@ export function AdminDashboardPage() {
           {stats.map((stat) => (
             <Card key={stat.key}>
               <CardBody className="flex items-center gap-4">
-                <span className={`flex size-12 items-center justify-center rounded-xl ${toneAccent[stat.tone]}`}>
+                <span
+                  className={`flex size-12 items-center justify-center rounded-xl ${toneAccent[stat.tone]}`}
+                >
                   <stat.icon className="size-6" strokeWidth={1.75} />
                 </span>
                 <div>

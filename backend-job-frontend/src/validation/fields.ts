@@ -30,12 +30,10 @@ export const niptSchema = z
   );
 
 const ALBANIAN_PHONE = /^\+355\d{8,9}$/;
-const PHONE_MESSAGE = 'Numri duhet të fillojë me +355 i ndjekur nga 8–9 shifra (p.sh. +355681234567).';
+const PHONE_MESSAGE =
+  'Numri duhet të fillojë me +355 i ndjekur nga 8–9 shifra (p.sh. +355681234567).';
 
-export const albanianPhoneSchema = z
-  .string()
-  .trim()
-  .regex(ALBANIAN_PHONE, PHONE_MESSAGE);
+export const albanianPhoneSchema = z.string().trim().regex(ALBANIAN_PHONE, PHONE_MESSAGE);
 
 export const optionalAlbanianPhone = z.preprocess(
   emptyToUndefined,

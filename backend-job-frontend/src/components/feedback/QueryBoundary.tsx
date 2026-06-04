@@ -24,7 +24,9 @@ export function QueryBoundary<T>({
   }
 
   if (query.isError) {
-    return <ErrorState error={query.error} onRetry={() => void query.refetch()} title={errorTitle} />;
+    return (
+      <ErrorState error={query.error} onRetry={() => void query.refetch()} title={errorTitle} />
+    );
   }
 
   if (isEmpty && emptyFallback && isEmpty(query.data)) {

@@ -114,7 +114,11 @@ function BusinessEditForm({ business }: { business: Business }) {
                 <Button variant="ghost" type="button" onClick={() => navigate('/businesses')}>
                   Anulo
                 </Button>
-                <Button type="submit" isLoading={updateBusiness.isPending} disabled={!form.formState.isDirty}>
+                <Button
+                  type="submit"
+                  isLoading={updateBusiness.isPending}
+                  disabled={!form.formState.isDirty}
+                >
                   Ruaj ndryshimet
                 </Button>
               </div>

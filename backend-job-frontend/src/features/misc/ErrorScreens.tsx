@@ -11,7 +11,14 @@ interface StatusScreenProps {
   actionLabel?: string;
 }
 
-function StatusScreen({ code, title, description, icon: Icon, to = '/', actionLabel = 'Kthehu te puna' }: StatusScreenProps) {
+function StatusScreen({
+  code,
+  title,
+  description,
+  icon: Icon,
+  to = '/',
+  actionLabel = 'Kthehu te puna',
+}: StatusScreenProps) {
   return (
     <Container className="flex min-h-[60vh] flex-col items-center justify-center py-16 text-center">
       <span className="mb-6 flex size-16 items-center justify-center rounded-2xl bg-ink text-paper">

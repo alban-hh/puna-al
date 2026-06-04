@@ -37,12 +37,7 @@ export function Pagination({ page, perPage, total, onPageChange, className }: Pa
     'press inline-flex h-9 min-w-9 items-center justify-center rounded-lg border border-line bg-surface px-2 text-sm font-medium text-ink hover:border-ink disabled:cursor-not-allowed disabled:text-muted disabled:hover:border-line';
 
   return (
-    <div
-      className={cn(
-        'flex flex-col items-center justify-between gap-3 sm:flex-row',
-        className,
-      )}
-    >
+    <div className={cn('flex flex-col items-center justify-between gap-3 sm:flex-row', className)}>
       <p className="text-sm text-muted">
         <span className="font-medium text-ink">
           {from}–{to}

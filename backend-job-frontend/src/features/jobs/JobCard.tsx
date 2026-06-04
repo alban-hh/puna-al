@@ -17,8 +17,7 @@ export function JobCard({ job }: { job: Job }) {
     >
       {job.featured && (
         <span className="absolute top-0 right-0 flex items-center gap-1 rounded-bl-lg bg-gold-500 px-2.5 py-1 text-xs font-semibold text-white">
-          <Sparkles className="size-3.5" />
-          I promovuar
+          <Sparkles className="size-3.5" />I promovuar
         </span>
       )}
 

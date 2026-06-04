@@ -1,10 +1,5 @@
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import {
-  jobsApi,
-  type CreateJobRequest,
-  type JobListParams,
-  type UpdateJobRequest,
-} from '@/api';
+import { jobsApi, type CreateJobRequest, type JobListParams, type UpdateJobRequest } from '@/api';
 import { queryKeys } from '@/api/queryKeys';
 
 export function useJobsList(params: JobListParams) {
@@ -27,7 +22,9 @@ function useJobCacheInvalidation() {
   const queryClient = useQueryClient();
   return () => {
     void queryClient.invalidateQueries({ queryKey: ['jobs'] });
-    void queryClient.invalidateQueries({ queryKey: ['businesses'] });
+    void queryClient.invalidateQueries({
+      predicate: (query) => query.queryKey[0] === 'businesses' && query.queryKey[2] === 'jobs',
+    });
   };
 }
 

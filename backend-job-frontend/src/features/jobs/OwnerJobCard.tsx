@@ -66,7 +66,13 @@ export function OwnerJobCard({
               Aplikantët
             </Link>
           )}
-          <Button size="sm" variant="secondary" leftIcon={<Pencil className="size-4" />} onClick={() => onEdit(job)} disabled={busy}>
+          <Button
+            size="sm"
+            variant="secondary"
+            leftIcon={<Pencil className="size-4" />}
+            onClick={() => onEdit(job)}
+            disabled={busy}
+          >
             Modifiko
           </Button>
           {job.status !== 'published' && (
@@ -83,15 +89,33 @@ export function OwnerJobCard({
           )}
           {job.status === 'published' && (
             <>
-              <Button size="sm" variant="gold" leftIcon={<Sparkles className="size-4" />} onClick={() => onPromote(job)} disabled={busy}>
+              <Button
+                size="sm"
+                variant="gold"
+                leftIcon={<Sparkles className="size-4" />}
+                onClick={() => onPromote(job)}
+                disabled={busy}
+              >
                 Promovo
               </Button>
-              <Button size="sm" variant="secondary" leftIcon={<XCircle className="size-4" />} onClick={() => onClose(job)} isLoading={busy}>
+              <Button
+                size="sm"
+                variant="secondary"
+                leftIcon={<XCircle className="size-4" />}
+                onClick={() => onClose(job)}
+                isLoading={busy}
+              >
                 Mbyll
               </Button>
             </>
           )}
-          <Button size="sm" variant="danger" leftIcon={<Trash2 className="size-4" />} onClick={() => onDelete(job)} disabled={busy}>
+          <Button
+            size="sm"
+            variant="danger"
+            leftIcon={<Trash2 className="size-4" />}
+            onClick={() => onDelete(job)}
+            disabled={busy}
+          >
             Fshi
           </Button>
         </div>

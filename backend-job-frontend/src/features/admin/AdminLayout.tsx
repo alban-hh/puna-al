@@ -14,7 +14,11 @@ const tabs = [
 export function AdminLayout() {
   return (
     <Container className="py-10">
-      <PageHeader eyebrow="Administrim" title="Paneli i administratorit" description="Moderoni platformën Puna.al." />
+      <PageHeader
+        eyebrow="Administrim"
+        title="Paneli i administratorit"
+        description="Moderoni platformën Puna.al."
+      />
 
       <nav className="mt-6 flex flex-wrap gap-1 border-b border-line">
         {tabs.map((tab) => (

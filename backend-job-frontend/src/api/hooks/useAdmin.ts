@@ -45,28 +45,41 @@ function useInvalidate(prefix: string) {
 
 export function useApproveBusiness() {
   const invalidate = useInvalidate('businesses');
-  return useMutation({ mutationFn: (id: string) => adminApi.approveBusiness(id), onSuccess: invalidate });
+  return useMutation({
+    mutationFn: (id: string) => adminApi.approveBusiness(id),
+    onSuccess: invalidate,
+  });
 }
 
 export function useRejectBusiness() {
   const invalidate = useInvalidate('businesses');
   return useMutation({
-    mutationFn: ({ id, reason }: { id: string; reason: string }) => adminApi.rejectBusiness(id, reason),
+    mutationFn: ({ id, reason }: { id: string; reason: string }) =>
+      adminApi.rejectBusiness(id, reason),
     onSuccess: invalidate,
   });
 }
 
 export function useSuspendBusiness() {
   const invalidate = useInvalidate('businesses');
-  return useMutation({ mutationFn: (id: string) => adminApi.suspendBusiness(id), onSuccess: invalidate });
+  return useMutation({
+    mutationFn: (id: string) => adminApi.suspendBusiness(id),
+    onSuccess: invalidate,
+  });
 }
 
 export function useSuspendUser() {
   const invalidate = useInvalidate('users');
-  return useMutation({ mutationFn: (id: string) => adminApi.suspendUser(id), onSuccess: invalidate });
+  return useMutation({
+    mutationFn: (id: string) => adminApi.suspendUser(id),
+    onSuccess: invalidate,
+  });
 }
 
 export function useTakedownJob() {
   const invalidate = useInvalidate('jobs');
-  return useMutation({ mutationFn: (id: string) => adminApi.takedownJob(id), onSuccess: invalidate });
+  return useMutation({
+    mutationFn: (id: string) => adminApi.takedownJob(id),
+    onSuccess: invalidate,
+  });
 }

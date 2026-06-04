@@ -21,8 +21,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     queryFn: () => accountApi.me(),
     enabled: sessionActive,
     retry: false,
-    staleTime: 60_000,
+    staleTime: 15_000,
+    refetchOnWindowFocus: true,
   });
+
+  const { refetch: refetchMe } = meQuery;
+  const refetchUser = useCallback(() => {
+    void refetchMe();
+  }, [refetchMe]);
 
   useEffect(() => {
     return tokenStore.onSessionCleared(() => {
@@ -32,13 +38,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, [queryClient]);
 
   useEffect(() => {
+    return tokenStore.onForbidden(() => {
+      if (tokenStore.getAccessToken()) refetchUser();
+    });
+  }, [refetchUser]);
+
+  useEffect(() => {
     if (
       meQuery.isError &&
       meQuery.error instanceof ApiError &&
       (meQuery.error.status === 401 || meQuery.error.status === 403)
     ) {
-      tokenStore.clear();
-      setSessionActive(false);
+      tokenStore.forceSignOut();
     }
   }, [meQuery.isError, meQuery.error]);
 
@@ -74,9 +85,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (refreshToken) {
       try {
         await authApi.logout(refreshToken);
-      } catch {
-        /* logout always succeeds locally even if the server call fails */
-      }
+      } catch {}
     }
     tokenStore.clear();
     setSessionActive(false);
@@ -103,9 +112,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       register,
       logout,
       applyAuthResponse,
-      refetchUser: () => void meQuery.refetch(),
+      refetchUser,
     }),
-    [user, status, login, register, logout, applyAuthResponse, meQuery],
+    [user, status, login, register, logout, applyAuthResponse, refetchUser],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

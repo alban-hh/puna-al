@@ -96,11 +96,14 @@ VITE_API_BASE_URL=https://backend-job.fly.dev/api/v1
   manage the platform at `/admin` (approve/reject/suspend businesses, suspend users, take down jobs,
   view stats).
 
-### Email verification & password reset links
+### Email verification & password reset
 
-Backend emails link to `…/verify-email?token=…` and `…/reset-password?token=…`. The matching routes
-read the `token` from the query string and call the API. Set the backend's `APP_BASE_URL` to this
-frontend's origin so those links land here.
+The verification and password-reset email links are served by the **backend** as standalone HTML
+pages (`GET /verify-email?token=…` and `GET /reset-password?token=…`, outside `/api/v1`), so the
+frontend does not handle those tokens. Point the backend's `APP_BASE_URL` at the backend's own origin.
+
+The frontend owns the parts around them: initiating a reset (`/forgot-password`) and a
+"check your inbox / resend verification" page (`/verify-email`).
 
 ---
 

@@ -27,8 +27,7 @@ export function JobApplicantsPage() {
       { id, status },
       {
         onSuccess: () => toast.success('Statusi i aplikimit u përditësua.'),
-        onError: (error) =>
-          toast.error(isApiError(error) ? error.message : 'Përditësimi dështoi.'),
+        onError: (error) => toast.error(isApiError(error) ? error.message : 'Përditësimi dështoi.'),
       },
     );
   };

@@ -44,7 +44,9 @@ export function ApplicantCard({ application, pending, onStatusChange }: Applican
 
         {application.cover_letter && (
           <div className="rounded-lg bg-surface-sunken p-4">
-            <p className="text-xs font-semibold tracking-wide text-muted uppercase">Letra motivuese</p>
+            <p className="text-xs font-semibold tracking-wide text-muted uppercase">
+              Letra motivuese
+            </p>
             <p className="mt-1.5 text-sm leading-relaxed whitespace-pre-line text-ink-soft">
               {application.cover_letter}
             </p>
@@ -63,7 +65,9 @@ export function ApplicantCard({ application, pending, onStatusChange }: Applican
                 Shiko CV-në →
               </a>
             )}
-            <span className="text-sm text-muted">Aplikoi {formatRelative(application.created_at)}</span>
+            <span className="text-sm text-muted">
+              Aplikoi {formatRelative(application.created_at)}
+            </span>
           </div>
           <div className="flex items-center gap-2">
             {pending && <Spinner className="size-4 text-flame-600" />}

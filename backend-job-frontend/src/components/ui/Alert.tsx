@@ -33,7 +33,11 @@ interface AlertProps {
 export function Alert({ variant = 'info', title, children, className }: AlertProps) {
   return (
     <div
-      className={cn('flex items-start gap-3 rounded-lg border p-4', config[variant].wrap, className)}
+      className={cn(
+        'flex items-start gap-3 rounded-lg border p-4',
+        config[variant].wrap,
+        className,
+      )}
       role={variant === 'error' ? 'alert' : 'status'}
     >
       <span className="mt-0.5 shrink-0">{config[variant].icon}</span>

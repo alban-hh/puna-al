@@ -30,7 +30,12 @@ export function JobApplyPanel({ job }: { job: JobDetail }) {
       <div className="flex flex-col gap-3">
         <p className="text-sm text-ink-soft">Hyni ose krijoni një llogari për të aplikuar.</p>
         <div className="flex flex-col gap-2 sm:flex-row">
-          <ButtonLink to="/login" state={{ from: location.pathname }} fullWidth leftIcon={<Lock className="size-4" />}>
+          <ButtonLink
+            to="/login"
+            state={{ from: location.pathname }}
+            fullWidth
+            leftIcon={<Lock className="size-4" />}
+          >
             Hyr për të aplikuar
           </ButtonLink>
           <ButtonLink to="/register" variant="secondary" fullWidth>
@@ -41,7 +46,23 @@ export function JobApplyPanel({ job }: { job: JobDetail }) {
     );
   }
 
-  const ownsBusiness = (myBusinesses.data ?? []).some((business) => business.id === job.business_id);
+  if (myBusinesses.isPending) {
+    return (
+      <Button size="lg" fullWidth isLoading disabled>
+        Apliko tani
+      </Button>
+    );
+  }
+
+  if (myBusinesses.isError) {
+    return (
+      <Alert variant="warning" title="Provoni përsëri">
+        Nuk u arrit të verifikohej pronësia e biznesit. Rifreskoni faqen për të aplikuar.
+      </Alert>
+    );
+  }
+
+  const ownsBusiness = myBusinesses.data.some((business) => business.id === job.business_id);
   if (ownsBusiness) {
     return (
       <Alert variant="info" title="Kjo është puna juaj">
@@ -54,7 +75,11 @@ export function JobApplyPanel({ job }: { job: JobDetail }) {
   if (applied) {
     return (
       <Alert variant="success" title="Aplikimi u dërgua">
-        E gjeni te <a className="font-semibold underline" href="/account/applications">Aplikimet e mia</a>.
+        E gjeni te{' '}
+        <a className="font-semibold underline" href="/account/applications">
+          Aplikimet e mia
+        </a>
+        .
       </Alert>
     );
   }
@@ -62,7 +87,12 @@ export function JobApplyPanel({ job }: { job: JobDetail }) {
   return (
     <VerifiedGate>
       <div className="flex flex-col gap-3">
-        <Button size="lg" fullWidth leftIcon={<Send className="size-4" />} onClick={() => setDialogOpen(true)}>
+        <Button
+          size="lg"
+          fullWidth
+          leftIcon={<Send className="size-4" />}
+          onClick={() => setDialogOpen(true)}
+        >
           Apliko tani
         </Button>
         <p className="flex items-center justify-center gap-1.5 text-xs text-muted">

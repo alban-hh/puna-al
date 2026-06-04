@@ -105,7 +105,12 @@ function DashboardContent({ business }: { business: Business }) {
         actions={
           <>
             <BusinessStatusBadge status={business.status} />
-            <ButtonLink to={`/businesses/${business.id}/edit`} variant="secondary" size="sm" leftIcon={<Pencil className="size-4" />}>
+            <ButtonLink
+              to={`/businesses/${business.id}/edit`}
+              variant="secondary"
+              size="sm"
+              leftIcon={<Pencil className="size-4" />}
+            >
               Modifiko biznesin
             </ButtonLink>
             <Button
@@ -122,13 +127,19 @@ function DashboardContent({ business }: { business: Business }) {
       />
 
       {!approved && (
-        <Alert className="mt-6" variant={business.status === 'rejected' ? 'warning' : 'info'} title="Postimi i punëve është i kufizuar">
-          {business.status === 'pending' && 'Biznesi është në pritje të miratimit. Pasi të miratohet, mund të publikoni punë.'}
+        <Alert
+          className="mt-6"
+          variant={business.status === 'rejected' ? 'warning' : 'info'}
+          title="Postimi i punëve është i kufizuar"
+        >
+          {business.status === 'pending' &&
+            'Biznesi është në pritje të miratimit. Pasi të miratohet, mund të publikoni punë.'}
           {business.status === 'rejected' &&
             (business.rejection_reason
               ? `Biznesi u refuzua: ${business.rejection_reason} Modifikoni të dhënat për ta ridërguar.`
               : 'Biznesi u refuzua. Modifikoni të dhënat për ta ridërguar.')}
-          {business.status === 'suspended' && 'Biznesi është pezulluar. Kontaktoni administratorin.'}
+          {business.status === 'suspended' &&
+            'Biznesi është pezulluar. Kontaktoni administratorin.'}
         </Alert>
       )}
       {approved && !isVerified && (
@@ -159,7 +170,10 @@ function DashboardContent({ business }: { business: Business }) {
               }
               action={
                 canPost ? (
-                  <Button leftIcon={<Plus className="size-4" />} onClick={() => setCreateOpen(true)}>
+                  <Button
+                    leftIcon={<Plus className="size-4" />}
+                    onClick={() => setCreateOpen(true)}
+                  >
                     Posto punë
                   </Button>
                 ) : undefined
@@ -194,9 +208,18 @@ function DashboardContent({ business }: { business: Business }) {
         </QueryBoundary>
       </div>
 
-      <JobFormModal open={createOpen} onClose={() => setCreateOpen(false)} businessId={business.id} />
+      <JobFormModal
+        open={createOpen}
+        onClose={() => setCreateOpen(false)}
+        businessId={business.id}
+      />
       {editJob && (
-        <JobFormModal open onClose={() => setEditJob(null)} businessId={business.id} job={editJob} />
+        <JobFormModal
+          open
+          onClose={() => setEditJob(null)}
+          businessId={business.id}
+          job={editJob}
+        />
       )}
       {promoteJob && <PromoteDialog open onClose={() => setPromoteJob(null)} job={promoteJob} />}
       <ConfirmDialog

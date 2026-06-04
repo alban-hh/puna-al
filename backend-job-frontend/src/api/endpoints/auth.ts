@@ -11,8 +11,7 @@ import type { AuthResponse, MessageResponse } from '../types';
 const noAuth = { auth: false, skipAuthRefresh: true } as const;
 
 export const authApi = {
-  register: (body: RegisterRequest) =>
-    apiClient.post<AuthResponse>('/auth/register', body, noAuth),
+  register: (body: RegisterRequest) => apiClient.post<AuthResponse>('/auth/register', body, noAuth),
 
   login: (body: LoginRequest) => apiClient.post<AuthResponse>('/auth/login', body, noAuth),
 

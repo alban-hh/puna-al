@@ -45,9 +45,7 @@ export function ApplyDialog({ jobId, jobTitle, open, onClose, onApplied }: Apply
       reset();
       apply.reset();
       onApplied();
-    } catch {
-      /* error surfaced inline below */
-    }
+    } catch {}
   });
 
   return (

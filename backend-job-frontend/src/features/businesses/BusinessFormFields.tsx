@@ -37,12 +37,7 @@ export function BusinessFormFields<T extends UpdateBusinessValues>({
         <Input label="Qyteti" required error={errorOf('city')} {...register(field('city'))} />
       </div>
 
-      <Input
-        label="Adresa"
-        required
-        error={errorOf('address')}
-        {...register(field('address'))}
-      />
+      <Input label="Adresa" required error={errorOf('address')} {...register(field('address'))} />
 
       <Input
         label="Telefoni"

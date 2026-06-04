@@ -66,7 +66,13 @@ export function AdminJobsPage() {
           </div>
         }
         isEmpty={(data) => data.items.length === 0}
-        emptyFallback={<EmptyState icon={Briefcase} title="Asnjë punë" description="Nuk ka punë që përputhen me filtrin." />}
+        emptyFallback={
+          <EmptyState
+            icon={Briefcase}
+            title="Asnjë punë"
+            description="Nuk ka punë që përputhen me filtrin."
+          />
+        }
       >
         {(data) => (
           <div className="flex flex-col gap-3">
@@ -136,7 +142,9 @@ export function AdminJobsPage() {
         onConfirm={confirmTakedown}
         onClose={() => setTarget(null)}
       >
-        <p className="text-sm text-ink-soft">Puna do të fshihet (soft delete) dhe nuk do të shfaqet në listime.</p>
+        <p className="text-sm text-ink-soft">
+          Puna do të fshihet (soft delete) dhe nuk do të shfaqet në listime.
+        </p>
       </ConfirmDialog>
     </div>
   );

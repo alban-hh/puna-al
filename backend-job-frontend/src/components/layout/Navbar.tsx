@@ -73,7 +73,9 @@ export function Navbar() {
   const linkClass = ({ isActive }: { isActive: boolean }) =>
     cn(
       'rounded-lg px-3 py-2 text-sm font-medium transition-colors',
-      isActive ? 'bg-surface-sunken text-ink' : 'text-ink-soft hover:bg-surface-sunken hover:text-ink',
+      isActive
+        ? 'bg-surface-sunken text-ink'
+        : 'text-ink-soft hover:bg-surface-sunken hover:text-ink',
     );
 
   return (
@@ -105,7 +107,9 @@ export function Navbar() {
                   {initials(user.full_name)}
                 </span>
                 <span className="max-w-32 truncate">{user.full_name}</span>
-                <ChevronDown className={cn('size-4 text-muted transition-transform', menuOpen && 'rotate-180')} />
+                <ChevronDown
+                  className={cn('size-4 text-muted transition-transform', menuOpen && 'rotate-180')}
+                />
               </button>
               {menuOpen && (
                 <div
@@ -215,7 +219,15 @@ export function Navbar() {
   );
 }
 
-function MenuLink({ to, icon: Icon, label }: { to: string; icon: typeof Briefcase; label: string }) {
+function MenuLink({
+  to,
+  icon: Icon,
+  label,
+}: {
+  to: string;
+  icon: typeof Briefcase;
+  label: string;
+}) {
   return (
     <Link
       to={to}

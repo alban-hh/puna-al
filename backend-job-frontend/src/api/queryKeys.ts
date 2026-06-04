@@ -18,8 +18,7 @@ export const queryKeys = {
   businesses: {
     mine: ['businesses', 'mine'] as const,
     detail: (id: string) => ['businesses', 'detail', id] as const,
-    jobs: (id: string, params: PaginationParams) =>
-      ['businesses', id, 'jobs', params] as const,
+    jobs: (id: string, params: PaginationParams) => ['businesses', id, 'jobs', params] as const,
   },
   jobs: {
     list: (params: JobListParams) => ['jobs', 'list', params] as const,

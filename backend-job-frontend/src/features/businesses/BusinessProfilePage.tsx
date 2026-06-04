@@ -16,7 +16,10 @@ export function BusinessProfilePage() {
 
   return (
     <Container className="max-w-3xl py-10">
-      <Link to="/" className="inline-flex items-center gap-1.5 text-sm font-medium text-ink-soft hover:text-flame-600">
+      <Link
+        to="/"
+        className="inline-flex items-center gap-1.5 text-sm font-medium text-ink-soft hover:text-flame-600"
+      >
         <ArrowLeft className="size-4" />
         Kthehu te punët
       </Link>
@@ -83,7 +86,9 @@ function BusinessProfile({ business }: { business: Business }) {
           </div>
           {business.website && (
             <div>
-              <dt className="text-xs font-semibold tracking-wide text-muted uppercase">Faqja web</dt>
+              <dt className="text-xs font-semibold tracking-wide text-muted uppercase">
+                Faqja web
+              </dt>
               <dd className="mt-1">
                 <a
                   href={business.website}
@@ -101,7 +106,10 @@ function BusinessProfile({ business }: { business: Business }) {
 
         {isOwner && (
           <div className="border-t border-line pt-5">
-            <ButtonLink to={`/businesses/${business.id}/jobs`} leftIcon={<SlidersHorizontal className="size-4" />}>
+            <ButtonLink
+              to={`/businesses/${business.id}/jobs`}
+              leftIcon={<SlidersHorizontal className="size-4" />}
+            >
               Menaxho punët
             </ButtonLink>
           </div>

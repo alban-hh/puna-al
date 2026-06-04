@@ -3,9 +3,11 @@ import type { Tokens } from './types';
 const REFRESH_TOKEN_KEY = 'punaal.refresh_token';
 
 let accessToken: string | null = null;
+let sessionEpoch = 0;
 
 type SessionListener = () => void;
 const sessionClearedListeners = new Set<SessionListener>();
+const forbiddenListeners = new Set<SessionListener>();
 
 export const tokenStore = {
   getAccessToken(): string | null {
@@ -31,9 +33,7 @@ export const tokenStore = {
       } else {
         localStorage.removeItem(REFRESH_TOKEN_KEY);
       }
-    } catch {
-      /* storage unavailable (private mode); access token still works in-memory */
-    }
+    } catch {}
   },
 
   setTokens(tokens: Tokens): void {
@@ -45,12 +45,16 @@ export const tokenStore = {
     return Boolean(this.getRefreshToken());
   },
 
+  getSessionEpoch(): number {
+    return sessionEpoch;
+  },
+
   clear(): void {
     accessToken = null;
     this.setRefreshToken(null);
+    sessionEpoch += 1;
   },
 
-  /** Clears tokens and notifies listeners (used when the session can no longer be recovered). */
   forceSignOut(): void {
     this.clear();
     sessionClearedListeners.forEach((listener) => listener());
@@ -59,5 +63,14 @@ export const tokenStore = {
   onSessionCleared(listener: SessionListener): () => void {
     sessionClearedListeners.add(listener);
     return () => sessionClearedListeners.delete(listener);
+  },
+
+  notifyForbidden(): void {
+    forbiddenListeners.forEach((listener) => listener());
+  },
+
+  onForbidden(listener: SessionListener): () => void {
+    forbiddenListeners.add(listener);
+    return () => forbiddenListeners.delete(listener);
   },
 };

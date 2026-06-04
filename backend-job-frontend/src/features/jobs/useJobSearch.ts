@@ -64,9 +64,9 @@ export function useJobSearch(perPage = 12) {
 
   const clear = useCallback(() => setSearchParams(new URLSearchParams()), [setSearchParams]);
 
-  const activeFilterCount = (['q', 'category', 'qark', 'employment_type', 'city', 'remote', 'featured'] as const).filter(
-    (key) => searchParams.get(key),
-  ).length;
+  const activeFilterCount = (
+    ['q', 'category', 'qark', 'employment_type', 'city', 'remote', 'featured'] as const
+  ).filter((key) => searchParams.get(key)).length;
 
   return { filters, page, setParam, setPage, clear, searchParams, activeFilterCount };
 }

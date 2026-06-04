@@ -61,7 +61,11 @@ export function ProfilePage() {
 
   return (
     <Container className="py-10">
-      <PageHeader eyebrow="Llogaria" title="Profili im" description="Menaxhoni të dhënat e llogarisë tuaj." />
+      <PageHeader
+        eyebrow="Llogaria"
+        title="Profili im"
+        description="Menaxhoni të dhënat e llogarisë tuaj."
+      />
 
       <div className="mt-8 grid gap-6 lg:grid-cols-[1fr_1.4fr]">
         <Card>
@@ -145,7 +149,12 @@ export function ProfilePage() {
                 error={errors.phone?.message}
                 {...register('phone')}
               />
-              <Input label="Email" value={user.email} disabled hint="Email-i nuk mund të ndryshohet." />
+              <Input
+                label="Email"
+                value={user.email}
+                disabled
+                hint="Email-i nuk mund të ndryshohet."
+              />
               <div className="flex justify-end">
                 <Button type="submit" isLoading={updateProfile.isPending} disabled={!isDirty}>
                   Ruaj ndryshimet

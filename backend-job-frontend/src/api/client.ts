@@ -10,9 +10,7 @@ interface RequestOptions {
   body?: unknown;
   params?: QueryParams;
   signal?: AbortSignal;
-  /** Attach the Authorization header when an access token is available. Default true. */
   auth?: boolean;
-  /** Skip the transparent refresh-and-retry on 401. Used by the auth endpoints themselves. */
   skipAuthRefresh?: boolean;
 }
 
@@ -70,11 +68,17 @@ async function performRefresh(): Promise<boolean> {
   const refresh_token = tokenStore.getRefreshToken();
   if (!refresh_token) return false;
 
+  const epoch = tokenStore.getSessionEpoch();
+
   const response = await execute('POST', '/auth/refresh', {
     body: { refresh_token },
     auth: false,
     skipAuthRefresh: true,
   });
+
+  if (tokenStore.getSessionEpoch() !== epoch) {
+    return false;
+  }
 
   if (!response.ok) {
     tokenStore.forceSignOut();
@@ -114,16 +118,20 @@ async function parseBody<T>(response: Response): Promise<T> {
 async function request<T>(method: string, path: string, options: RequestOptions = {}): Promise<T> {
   let response = await execute(method, path, options);
 
-  if (
-    response.status === 401 &&
-    !options.skipAuthRefresh &&
-    options.auth !== false &&
-    tokenStore.hasRefreshToken()
-  ) {
+  const isAuthenticatedRequest = options.auth !== false && !options.skipAuthRefresh;
+
+  if (response.status === 401 && isAuthenticatedRequest && tokenStore.hasRefreshToken()) {
     const refreshed = await refreshSession();
-    if (refreshed) {
+    if (refreshed && tokenStore.getAccessToken()) {
       response = await execute(method, path, options);
+      if (response.status === 401) {
+        tokenStore.forceSignOut();
+      }
     }
+  }
+
+  if (response.status === 403 && isAuthenticatedRequest && path !== '/me') {
+    tokenStore.notifyForbidden();
   }
 
   if (!response.ok) {

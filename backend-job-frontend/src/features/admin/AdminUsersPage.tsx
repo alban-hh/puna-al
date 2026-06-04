@@ -27,7 +27,12 @@ export function AdminUsersPage() {
   const toast = useToast();
   const status = get('status') as UserStatus | '';
   const q = get('q');
-  const query = useAdminUsers({ page, per_page: 20, status: status || undefined, q: q || undefined });
+  const query = useAdminUsers({
+    page,
+    per_page: 20,
+    status: status || undefined,
+    q: q || undefined,
+  });
 
   const suspend = useSuspendUser();
   const [target, setTarget] = useState<User | null>(null);
@@ -42,6 +47,10 @@ export function AdminUsersPage() {
     const handle = setTimeout(() => set('q', qInput.trim()), 350);
     return () => clearTimeout(handle);
   }, [qInput, set]);
+
+  useEffect(() => {
+    setQInput((prev) => (prev.trim() === q ? prev : q));
+  }, [q]);
 
   const confirmSuspend = () => {
     if (!target) return;
@@ -93,7 +102,13 @@ export function AdminUsersPage() {
           </div>
         }
         isEmpty={(data) => data.items.length === 0}
-        emptyFallback={<EmptyState icon={UserX} title="Asnjë përdorues" description="Nuk ka përdorues që përputhen me kërkimin." />}
+        emptyFallback={
+          <EmptyState
+            icon={UserX}
+            title="Asnjë përdorues"
+            description="Nuk ka përdorues që përputhen me kërkimin."
+          />
+        }
       >
         {(data) => (
           <div className="flex flex-col gap-3">

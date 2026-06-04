@@ -26,9 +26,7 @@ export function PromoteDialog({ open, onClose, job }: PromoteDialogProps) {
       await promote.mutateAsync({ id: job.id, days });
       toast.success(`"${job.title}" u promovua për ${days} ditë.`);
       onClose();
-    } catch {
-      /* surfaced inline */
-    }
+    } catch {}
   };
 
   return (
