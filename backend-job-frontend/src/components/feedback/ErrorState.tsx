@@ -8,7 +8,7 @@ interface ErrorStateProps {
   title?: string;
 }
 
-export function resolveErrorMessage(error: unknown): string {
+function resolveErrorMessage(error: unknown): string {
   if (isApiError(error)) return error.message;
   if (error instanceof Error) return error.message;
   return 'Ndodhi një gabim i papritur.';
