@@ -8,7 +8,7 @@ import { Card, CardBody } from '@/components/ui/Card';
 import { CategorySelect, EmploymentTypeSelect, QarkSelect } from '@/components/forms/MetaSelects';
 import { controlBase, controlBorder } from '@/components/ui/Field';
 import { cn } from '@/lib/cn';
-import { useJobSearch } from './useJobSearch';
+import { type useJobSearch } from './useJobSearch';
 
 interface JobsFiltersProps {
   search: ReturnType<typeof useJobSearch>;
