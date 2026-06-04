@@ -95,6 +95,8 @@ pub fn build_router(state: Arc<AppState>) -> Router {
 
     Router::new()
         .route("/health", get(handler::health::health))
+        .route("/verify-email", get(handler::page::verify_email))
+        .route("/reset-password", get(handler::page::reset_password_form))
         .nest("/api/v1", api)
         .layer(
             ServiceBuilder::new()
