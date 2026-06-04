@@ -1,0 +1,10 @@
+target
+.git
+.gitignore
+.env
+data
+*.db
+*.db-shm
+*.db-wal
+README.md
+API.md

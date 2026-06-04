@@ -116,18 +116,51 @@ Outbound email is **never sent inline** in the request path. Each transactional 
 
 Events: verification on register, business submitted, business approved, business rejected (with reason), new application received, password reset.
 
-## Swapping the database
+## Database backends (SQLite & Postgres)
 
-1. Add the Postgres driver feature to `sqlx` and a `repository/postgres/` module implementing the same repository traits from `repository/mod.rs`.
-2. Add a Postgres-flavoured migrations set.
-3. In `main.rs`, build the Postgres pool and construct the `Postgres*` repositories instead of the `Sqlite*` ones.
+Both SQLite and Postgres are implemented and selected automatically from the `DATABASE_URL` scheme:
 
-No service, handler, DTO or domain code changes — they depend only on the traits.
+- `sqlite://…` → SQLite (`repository/sqlite/`, migrations in `migrations/sqlite/`). Good for local dev.
+- `postgres://…` or `postgresql://…` → Postgres (`repository/postgres/`, migrations in `migrations/postgres/`). Use this in production.
+
+Selection happens in `storage.rs`; services, handlers, DTOs and domain code are identical for both because they depend only on the repository traits. Migrations for the chosen backend run automatically on startup.
+
+Notes for managed Postgres (e.g. Neon):
+- The connector tolerates Neon-style URLs: it strips the `channel_binding` parameter (unsupported by sqlx) and disables the prepared-statement cache so it works through Neon's PgBouncer pooler. `sslmode=require` is honoured.
+- To add another SQL database, implement the same traits in a new `repository/<db>/` module and add a branch in `storage.rs`.
 
 ## Swapping the queue or email provider
 
 - **Queue**: implement the `Queue` trait (`queue/mod.rs`) with another backend (e.g. Redis or Postgres) and construct it in `main.rs`. The worker and `EmailService` are unchanged.
 - **Email provider**: implement the `EmailClient` trait (`email/mod.rs`) for another provider and construct it in `main.rs`.
+
+## Deploy to Fly.io (with Neon Postgres)
+
+The repo ships a multi-stage `Dockerfile` (cargo-chef cached build → slim runtime) and a `fly.toml`. The app listens on `0.0.0.0:8080`, which matches `internal_port` in `fly.toml`, so no port wiring is needed. Migrations run on first boot and the admin is seeded automatically.
+
+```bash
+# 1. Launch (uses the existing Dockerfile + fly.toml; don't let it overwrite them)
+fly launch --no-deploy
+
+# 2. Set secrets (never commit these)
+fly secrets set \
+  DATABASE_URL='postgresql://USER:PASSWORD@HOST/neondb?sslmode=require' \
+  JWT_SECRET='<64-hex-chars>' \
+  RESEND_API_KEY='re_...' \
+  EMAIL_FROM='Puna.al <noreply@your-verified-domain>' \
+  ADMIN_EMAIL='admin@your-domain' \
+  ADMIN_PASSWORD='<strong-password>' \
+  APP_BASE_URL='https://<your-app>.fly.dev' \
+  CORS_ORIGINS='https://<your-frontend-origin>'
+
+# 3. Deploy
+fly deploy
+```
+
+Notes:
+- Pick a `primary_region` close to your database. Neon `eu-central-1` (Frankfurt) pairs with Fly `fra`.
+- `min_machines_running = 1` keeps the email worker alive. Set it to `0` to save cost, but then queued emails are only processed while a machine is awake.
+- The admin is seeded only if no admin exists; set `ADMIN_EMAIL`/`ADMIN_PASSWORD` before the first deploy and keep them.
 
 ## Quality
 
