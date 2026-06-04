@@ -180,11 +180,10 @@ impl ApplicationRepository for PgApplicationRepository {
         job_id: Uuid,
         page: Pagination,
     ) -> AppResult<(Vec<JobApplication>, i64)> {
-        let total: i64 =
-            sqlx::query_scalar("SELECT COUNT(*) FROM applications WHERE job_id = $1")
-                .bind(encode_uuid(job_id))
-                .fetch_one(&self.pool)
-                .await?;
+        let total: i64 = sqlx::query_scalar("SELECT COUNT(*) FROM applications WHERE job_id = $1")
+            .bind(encode_uuid(job_id))
+            .fetch_one(&self.pool)
+            .await?;
 
         let rows = sqlx::query_as::<_, JobApplicationRow>(
             "SELECT a.id, a.job_id, a.applicant_id, a.cover_letter, a.cv_url, a.status, \

@@ -95,22 +95,20 @@ impl UserRepository for PgUserRepository {
     }
 
     async fn find_by_id(&self, id: Uuid) -> AppResult<Option<User>> {
-        let row = sqlx::query_as::<_, UserRow>(&format!(
-            "SELECT {COLUMNS} FROM users WHERE id = $1"
-        ))
-        .bind(encode_uuid(id))
-        .fetch_optional(&self.pool)
-        .await?;
+        let row =
+            sqlx::query_as::<_, UserRow>(&format!("SELECT {COLUMNS} FROM users WHERE id = $1"))
+                .bind(encode_uuid(id))
+                .fetch_optional(&self.pool)
+                .await?;
         row.map(User::try_from).transpose()
     }
 
     async fn find_by_email(&self, email: &str) -> AppResult<Option<User>> {
-        let row = sqlx::query_as::<_, UserRow>(&format!(
-            "SELECT {COLUMNS} FROM users WHERE email = $1"
-        ))
-        .bind(email)
-        .fetch_optional(&self.pool)
-        .await?;
+        let row =
+            sqlx::query_as::<_, UserRow>(&format!("SELECT {COLUMNS} FROM users WHERE email = $1"))
+                .bind(email)
+                .fetch_optional(&self.pool)
+                .await?;
         row.map(User::try_from).transpose()
     }
 

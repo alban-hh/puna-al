@@ -50,7 +50,10 @@ async fn main() -> anyhow::Result<()> {
         config.resend_api_key.clone(),
         config.email_from.clone(),
     ));
-    let jwt = Arc::new(JwtService::new(&config.jwt_secret, config.access_token_ttl()));
+    let jwt = Arc::new(JwtService::new(
+        &config.jwt_secret,
+        config.access_token_ttl(),
+    ));
     let email_service = Arc::new(EmailService::new(
         storage.queue.clone(),
         config.app_base_url.clone(),

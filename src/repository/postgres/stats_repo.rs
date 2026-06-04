@@ -39,7 +39,9 @@ impl StatsRepository for PgStatsRepository {
                 .count("SELECT COUNT(*) FROM jobs WHERE deleted_at IS NULL")
                 .await?,
             published_jobs: self
-                .count("SELECT COUNT(*) FROM jobs WHERE status = 'published' AND deleted_at IS NULL")
+                .count(
+                    "SELECT COUNT(*) FROM jobs WHERE status = 'published' AND deleted_at IS NULL",
+                )
                 .await?,
             total_applications: self.count("SELECT COUNT(*) FROM applications").await?,
         })

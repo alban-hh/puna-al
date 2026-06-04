@@ -88,7 +88,9 @@ fn push_public_filters(builder: &mut QueryBuilder<'_, Postgres>, query: &JobQuer
             .push_bind(encode_dt(query.now));
     }
     if let Some(category) = query.category {
-        builder.push(" AND category = ").push_bind(category.as_str());
+        builder
+            .push(" AND category = ")
+            .push_bind(category.as_str());
     }
     if let Some(qark) = query.qark {
         builder.push(" AND qark = ").push_bind(qark.as_str());

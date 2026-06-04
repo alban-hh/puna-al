@@ -5,7 +5,9 @@ use uuid::Uuid;
 
 use crate::domain::refresh_token::RefreshToken;
 use crate::error::{AppError, AppResult};
-use crate::repository::convert::{encode_dt, encode_opt_dt, encode_uuid, parse_dt, parse_opt_dt, parse_uuid};
+use crate::repository::convert::{
+    encode_dt, encode_opt_dt, encode_uuid, parse_dt, parse_opt_dt, parse_uuid,
+};
 use crate::repository::RefreshTokenRepository;
 
 pub struct PgRefreshTokenRepository {
@@ -79,19 +81,17 @@ impl RefreshTokenRepository for PgRefreshTokenRepository {
     }
 
     async fn revoke(&self, id: Uuid, revoked_at: DateTime<Utc>) -> AppResult<()> {
-        sqlx::query("UPDATE refresh_tokens SET revoked_at = $1 WHERE id = $2 AND revoked_at IS NULL")
-            .bind(encode_dt(revoked_at))
-            .bind(encode_uuid(id))
-            .execute(&self.pool)
-            .await?;
+        sqlx::query(
+            "UPDATE refresh_tokens SET revoked_at = $1 WHERE id = $2 AND revoked_at IS NULL",
+        )
+        .bind(encode_dt(revoked_at))
+        .bind(encode_uuid(id))
+        .execute(&self.pool)
+        .await?;
         Ok(())
     }
 
-    async fn revoke_all_for_user(
-        &self,
-        user_id: Uuid,
-        revoked_at: DateTime<Utc>,
-    ) -> AppResult<()> {
+    async fn revoke_all_for_user(&self, user_id: Uuid, revoked_at: DateTime<Utc>) -> AppResult<()> {
         sqlx::query(
             "UPDATE refresh_tokens SET revoked_at = $1 WHERE user_id = $2 AND revoked_at IS NULL",
         )

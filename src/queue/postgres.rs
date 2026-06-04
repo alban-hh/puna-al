@@ -112,12 +112,7 @@ impl Queue for PostgresQueue {
         Ok(())
     }
 
-    async fn reschedule(
-        &self,
-        id: Uuid,
-        run_at: DateTime<Utc>,
-        last_error: &str,
-    ) -> AppResult<()> {
+    async fn reschedule(&self, id: Uuid, run_at: DateTime<Utc>, last_error: &str) -> AppResult<()> {
         sqlx::query(
             "UPDATE queue_jobs SET status = 'pending', run_at = $1, last_error = $2, \
              updated_at = $3 WHERE id = $4",
