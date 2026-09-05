@@ -10,14 +10,14 @@ FROM chef AS builder
 COPY --from=planner /app/recipe.json recipe.json
 RUN cargo chef cook --release --recipe-path recipe.json
 COPY . .
-RUN cargo build --release --bin backend-job
+RUN cargo build --release --bin jobboard-api
 
 FROM debian:bookworm-slim AS runtime
 RUN apt-get update \
     && apt-get install -y --no-install-recommends ca-certificates \
     && rm -rf /var/lib/apt/lists/*
 WORKDIR /app
-COPY --from=builder /app/target/release/backend-job /usr/local/bin/backend-job
+COPY --from=builder /app/target/release/jobboard-api /usr/local/bin/jobboard-api
 ENV BIND_ADDR=0.0.0.0:8080
 EXPOSE 8080
-CMD ["backend-job"]
+CMD ["jobboard-api"]

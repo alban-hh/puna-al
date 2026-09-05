@@ -1,9 +1,9 @@
 {
-  "name": "puna-al-frontend",
+  "name": "jobboard-frontend",
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "description": "Production frontend for the Puna.al Albania job board API",
+  "description": "Frontend for the Puna.al job board",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",

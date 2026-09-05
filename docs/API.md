@@ -1,6 +1,6 @@
-# Puna.al Job Board — Frontend API Reference
+# Puna.al API Reference
 
-This document describes the entire HTTP API. It is the single source of truth for building the frontend. Everything a client needs is here: base URL, auth, conventions, all enums, all request/response schemas, every endpoint, every status code, and the exact JSON error shape.
+This document describes the entire HTTP API. Everything a client needs is here: base URL, auth, conventions, all enums, all request/response schemas, every endpoint, every status code, and the exact JSON error shape.
 
 ---
 
@@ -57,7 +57,7 @@ List endpoints accept `page` and `per_page` query params and return a **page env
 
 ```json
 {
-  "items": [ /* array of the resource */ ],
+  "items": [],
   "page": 1,
   "per_page": 20,
   "total": 137
@@ -198,8 +198,9 @@ These are referenced by the endpoints below. A `?` after a type means the field 
 ```
 
 ### `Auth` (returned by register & login)
+`user` is a `User` object and `tokens` is a `Tokens` object.
 ```json
-{ "user": { /* User */ }, "tokens": { /* Tokens */ } }
+{ "user": {}, "tokens": {} }
 ```
 
 ### `Business`
@@ -258,11 +259,10 @@ These are referenced by the endpoints below. A `?` after a type means the field 
 `salary_min`, `salary_max`, `salary_period` may be `null`. `featured` is computed (`true` if `featured_until` is in the future).
 
 ### `JobDetail` (returned by `GET /jobs/{id}`)
-A `Job` object with all its fields **plus** an embedded `business`:
+A `Job` object with all its fields **plus** an embedded `business` (a `BusinessSummary`):
 ```json
 {
-  /* ...all Job fields... */
-  "business": { /* BusinessSummary */ }
+  "business": {}
 }
 ```
 
@@ -284,7 +284,6 @@ A `Job` object with all its fields **plus** an embedded `business`:
 An `Application` with all its fields **plus** an embedded `applicant`:
 ```json
 {
-  /* ...all Application fields... */
   "applicant": { "id": "uuid", "full_name": "string", "email": "string", "phone": "string?" }
 }
 ```
@@ -293,7 +292,6 @@ An `Application` with all its fields **plus** an embedded `applicant`:
 An `Application` with all its fields **plus** an embedded `job`:
 ```json
 {
-  /* ...all Application fields... */
   "job": { "id": "uuid", "title": "string", "city": "string", "business_name": "string" }
 }
 ```
@@ -692,17 +690,13 @@ On any `401` with `error: "unauthorized"`:
 ```bash
 BASE=http://localhost:8080/api/v1
 
-# register
 curl -s -X POST $BASE/auth/register -H 'content-type: application/json' \
   -d '{"email":"me@example.al","password":"password123","full_name":"Test User","phone":"+355681234567"}'
 
-# login
 curl -s -X POST $BASE/auth/login -H 'content-type: application/json' \
   -d '{"email":"me@example.al","password":"password123"}'
 
-# authenticated call
 curl -s $BASE/me -H "authorization: Bearer <ACCESS_TOKEN>"
 
-# public job search
 curl -s "$BASE/jobs?qark=Tiran%C3%AB&category=information_technology&remote=true&sort=salary_high&page=1&per_page=20"
 ```
