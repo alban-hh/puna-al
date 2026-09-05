@@ -1,5 +1,10 @@
 # Puna.al
 
+[![CI](https://github.com/alban-hh/puna-al/actions/workflows/ci.yml/badge.svg)](https://github.com/alban-hh/puna-al/actions/workflows/ci.yml)
+![Rust](https://img.shields.io/badge/Rust-Axum-000000?logo=rust)
+![React](https://img.shields.io/badge/React-TypeScript-3178C6?logo=typescript&logoColor=white)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+
 A job board for Albania. Rust REST API and React frontend in one repository.
 
 ## Structure
